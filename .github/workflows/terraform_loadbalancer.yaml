@@ -1,96 +1,58 @@
-name: terraform_loadbalancer.yaml
+name: terraform_loadbalancer
 
 on:
-
   workflow_dispatch:
-
     inputs:
-
-
       lb_name:
-
         description: 'Load-Balancer Name'
-
         required: false
 
       security_group:
-
         description: 'Security Group Name for the instance'
-
         required: false
 
       allowed_ports:
-
         description: 'List of allowed inbound ports (comma separated)'
-
         required: false
 
       instance_id:
-
         description: 'Instance-Id To Add In Target-Group'
-
         required: false
 
       region:
-
         description: 'AWS region'
-
         required: true
-      
-      instance_id:
 
-        description: 'Instance-Id'
-
-        required: false
-
- 
- 
 permissions:
-
   id-token: write
-
   contents: read
- 
+
 jobs:
-
   terraform_apply:
-
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout code
-
       uses: actions/checkout@v2
- 
+
     - name: Assume AWS Role using OIDC
-
       uses: aws-actions/configure-aws-credentials@v1.7.0
-
       with:
-
         role-to-assume: arn:aws:iam::730335384723:role/backstage_interns_project
-
         role-session-name: GitHub_to_AWS_via_FederatedOIDC
-
         aws-region: ${{ github.event.inputs.region }}
- 
-    - name: Setup Terraform
 
+    - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-
       run: terraform init
- 
+
     - name: Terraform Format
-
       run: terraform fmt
- 
+
     - name: Terraform Validate
-
       run: terraform validate
- 
-    - name: Terraform Apply
 
+    - name: Terraform Apply
       run: terraform apply -var lb_name=${{ github.event.inputs.lb_name }} -var region=${{ github.event.inputs.region }}  -var security_group=${{ github.event.inputs.security_group }} -var allowed_ports=${{ github.event.inputs.allowed_ports }} -var instance_id=${{ github.event.inputs.instance_id }} -auto-approve
