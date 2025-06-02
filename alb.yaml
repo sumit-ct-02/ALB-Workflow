@@ -90,11 +90,11 @@ spec:
       input:
         jobName: ec2-Create
         parameters:
-          region: ${{ parameters.region }}
-          action: ${{ parameters.action }}
-          lb_name: ${{ parameters.lb_name || '' }}
-          security_group: ${{ parameters.securityGroup || '' }}
-          allowed_ports: ${{ parameters.allowedPorts ? parameters.allowedPorts.join(',') : '' }}
-          instance_id: ${{ parameters.instance_id || '' }}
-          alb_arn: ${{ parameters.alb_arn || '' }}
+            region: "${{ parameters.region }}"
+            action: "${{ parameters.action }}"
+            lb_name: "${{ parameters.lb_name || '' }}"
+            security_group: "${{ parameters.securityGroup || '' }}"
+            allowed_ports: "${{ parameters.allowedPorts ? parameters.allowedPorts.join(',') : '' }}"
+            instance_id: "${{ parameters.instance_id || '' }}"
+            alb_arn: "${{ parameters.alb_arn || '' }}"
         waitForCompletion: false
