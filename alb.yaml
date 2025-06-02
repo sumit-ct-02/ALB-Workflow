@@ -82,13 +82,19 @@ spec:
 
             required:
               - alb_arn
-  steps:
-    - id: trigger-job
-      name: Trigger Jenkins Job
-      action: fetch:plain
-      input:
-        url: "http://13.204.18.82:8080/job/ec2-Create/buildWithParameters?region=${{ parameters.region }}&action=${{ parameters.action }}&lb_name=${{ parameters.lb_name || '' }}&security_group=${{ parameters.securityGroup || '' }}&allowed_ports=${{ parameters.allowedPorts ? parameters.allowedPorts.join(',') : '' }}&instance_id=${{ parameters.instance_id || '' }}&alb_arn=${{ parameters.alb_arn || '' }}"
-        method: POST
-        headers:
-          Authorization: "Basic YmFja3N0YWdlOjk5ODkyMWM1MzUxM2NiMzYwNzk0YmY5MThmZjQ0NzQ1"
+ steps:
+  - id: trigger-job
+    name: Trigger Jenkins Job
+    action: jenkins:job:build
+    input:
+      jobName: ec2-Create
+      parameters:
+        region: ${{ parameters.region }}
+        action: ${{ parameters.action }}
+        lb_name: ${{ parameters.lb_name || '' }}
+        security_group: ${{ parameters.securityGroup || '' }}
+        allowed_ports: ${{ parameters.allowedPorts ? parameters.allowedPorts.join(',') : '' }}
+        instance_id: ${{ parameters.instance_id || '' }}
+        alb_arn: ${{ parameters.alb_arn || '' }}
+      waitForCompletion: false  # Optional: set to true if you want to wait for the job to complete
 
