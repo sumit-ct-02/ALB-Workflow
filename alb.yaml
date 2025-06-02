@@ -92,6 +92,7 @@ spec:
         headers:
           Authorization: "Basic YmFja3N0YWdlOjk5ODkyMWM1MzUxM2NiMzYwNzk0YmY5MThmZjQ0NzQ1"
 
-  output:
-    text: 
-      - "✅ Jenkins job ec2-Create has been triggered!"
+output:
+  text:
+    - type: success
+      text: "✅ Jenkins job 'ec2-Create' has been triggered!"
