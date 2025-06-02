@@ -1,0 +1,97 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: Load-Balancer
+  title: jenkins_elb  
+  description: Cerate and Delete Application Load Balancer 
+spec:
+  owner: sumit.d
+  type: infrastructure
+
+  parameters:
+  - title: Load-Balancer Details
+    required:
+      - action
+      - region
+    properties:
+      action:
+        type: string
+        title: Action
+        description: Choose the action you want to perform.
+        enum:
+          - Create
+          - Delete
+
+      region: 
+        type: string
+        title: AWS Region
+        description: The AWS region where the Load Balancer needs to be Created or want to be Deleted.
+        enum:
+          - us-east-1
+          - ap-south-1
+
+    dependencies:
+      action:
+        oneOf:
+          - properties:
+              action:
+                enum: ["Create"]
+              lb_name:
+                type: string
+                title: Load-Balancer Name
+                description: Name of the Load-Balancer to Create.
+
+              securityGroup:
+                type: string
+                title: Security Group Name
+                description: Name for the security group.
+
+              allowedPorts:
+                type: array
+                title: Allowed Inbound Ports
+                description: Ports to open for inbound traffic.
+                items:
+                  type: number
+                  enum: [22, 80, 443, 3306, 5432]
+                  enumNames:
+                    - 22 - SSH
+                    - 80 - HTTP
+                    - 443 - HTTPS
+                    - 3306 - MySQL
+                    - 5432 - PostgreSQL
+                uniqueItems: true
+              
+              instance_id:
+                type: string
+                title: Instance ID
+                description: ID of the EC2 instance to add in Target-Group.
+
+            required:
+              - lb_name
+              - securityGroup
+              - allowedPorts
+              - instance_id
+
+          - properties:
+              action:
+                enum: ["Delete"]
+              alb_arn:
+                type: string
+                title: ALB ARN
+                description: Application Load Balancer ARN
+
+            required:
+              - alb_arn
+  steps:
+    - id: trigger-job
+      name: Trigger Jenkins Job
+      action: fetch:plain
+      input:
+        url: "http://13.204.18.82:8080/job/ec2-Create/buildWithParameters?region=${{ parameters.region }}&action=${{ parameters.action }}&lb_name=${{ parameters.lb_name || '' }}&security_group=${{ parameters.securityGroup || '' }}&allowed_ports=${{ parameters.allowedPorts ? parameters.allowedPorts.join(',') : '' }}&instance_id=${{ parameters.instance_id || '' }}&alb_arn=${{ parameters.alb_arn || '' }}"
+        method: POST
+        headers:
+          Authorization: "Basic YmFja3N0YWdlOjk5ODkyMWM1MzUxM2NiMzYwNzk0YmY5MThmZjQ0NzQ1"
+
+  output:
+    text: |
+      ✅ Jenkins job "ec2-Create" has been triggered!
