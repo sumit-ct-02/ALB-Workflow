@@ -94,4 +94,4 @@ spec:
 
   output:
     text: 
-      -"✅ Jenkins job "ec2-Create" has been triggered!"
+      - "✅ Jenkins job "ec2-Create" has been triggered!"
