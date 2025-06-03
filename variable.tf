@@ -49,5 +49,9 @@ variable "lb_name" {
   description = "Load Balance Name"
   default = ""
 }
-
+variable "alb_arn" {
+  description = "ARN of the ALB to destroy"
+  type        = string
+  default     = ""
+}
 # terraform apply -var="lb_name=sd-backstage"-var="security_group=backstage-alb-sg" -var="allowed_ports=[80]" -var="instance_id=i-05ddf3fdf72fe2db6"
