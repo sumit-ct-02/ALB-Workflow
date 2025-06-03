@@ -6,13 +6,13 @@ variable "vpc_id" {
 }
 
 # subnet
-variable "subnet_id-1" {
+variable "subnet_id_1" {
   type        = string
   description = "Subnet ID to launch instance in"
   default     = "subnet-0376b05408a1be5d4"
 }
 
-variable "subnet_id-2" {
+variable "subnet_id_2" {
   type        = string
   description = "Subnet ID to launch instance in"
   default     = "subnet-0cca197d7ebb7f99a"
