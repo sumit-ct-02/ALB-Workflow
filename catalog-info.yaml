@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: Aplication Load Balancer (Jenkins)
+  name: Aplication Load Balancer
   description: A simple Jenkins job that creates Aplication Load Balancer 
   annotations:
     jenkins.io/job-full-name: albjenkins
