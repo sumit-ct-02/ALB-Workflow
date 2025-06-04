@@ -4,7 +4,7 @@ metadata:
   name: Aplication Load Balancer (Jenkins)
   description: A simple Jenkins job that creates Aplication Load Balancer 
   annotations:
-    jenkins.io/job-full-name: ec2-Create
+    jenkins.io/job-full-name: albjenkins
     backstage.io/techdocs-ref: dir:.
     # github.com/project-slug: KarthikNarsapur/backstage/blob/Bhargava/sqs
 spec:
