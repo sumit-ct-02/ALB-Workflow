@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Aplication Load Balancer (Jenkins)
+  description: A simple Jenkins job that creates Aplication Load Balancer 
+  annotations:
+    jenkins.io/job-full-name: ec2-Create
+    backstage.io/techdocs-ref: dir:.
+    # github.com/project-slug: KarthikNarsapur/backstage/blob/Bhargava/sqs
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user:default/sumit.d
