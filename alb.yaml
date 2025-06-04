@@ -88,7 +88,7 @@ spec:
       name: Trigger Jenkins Job
       action: jenkins:job:build
       input:
-        jobName: ec2-Create
+        jobName: albjenkins
         parameters:
             region: "${{ parameters.region }}"
             action: "${{ parameters.action }}"
